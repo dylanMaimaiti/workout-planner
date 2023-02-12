@@ -22,4 +22,4 @@
  - Then create an env file to hold the mongodb connection string
 
 ### Credits
- - Coded along with this [tutorial](https://www.youtube.com/@NetNinja)
+ - Coded along with this [tutorial](https://www.youtube.com/@NetNinja) to refresh my React hooks knowledge
