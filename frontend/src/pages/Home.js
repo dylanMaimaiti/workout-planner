@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 //components
 import WorkoutDetails from "../components/WorkoutDetails";
-
+import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
     const [workouts, setWorkouts] = useState(null);
@@ -21,13 +21,14 @@ const Home = () => {
         fetchWorkouts();
     }, []);
 
-    return (
+    return ( 
         <div className="home">
-            <div className="worksout">
+            <div className="workouts">
                 {workouts && workouts.map((workout) => {
-                    <WorkoutDetails key={workout._id} workout={workout} />
+                    return <WorkoutDetails key={workout._id} workout={workout} />
                 })}
             </div>
+            <WorkoutForm />
         </div>
     )
 };
