@@ -1,4 +1,4 @@
-# Workout Planner
+# Workout Planner (MERN stack)
 
 ## Description
 - This is a MERN stack application for keeping track of workouts
