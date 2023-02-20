@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 //creates a token using the document id as the payload
 //uses a secret env string to sign the token which expires in 1 hour
 const createToken = (_id) => {
-    jwt.sign({_id}, process.env.SECRET, {expiresIn: "1h"})
+    return jwt.sign({_id}, process.env.SECRET, {expiresIn: "1h"})
 }
 
 
@@ -12,7 +12,7 @@ const createToken = (_id) => {
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
     try {
-        const user = await User.loginUser(email, password);
+        const user = await User.login(email, password);
 
         //create token
         const token = createToken(user._id);
@@ -28,11 +28,9 @@ const signupUser = async (req, res) => {
     const {email, password} = req.body;
     //attempt to sign up the user, if successful creates new document in db
     try {
-        const user = await User.signupUser(email, password);
-
+        const user = await User.signup(email, password);
         //create an auth token
         const token = createToken(user._id);
-
         //send back email and the new user doc object
         res.status(200).json({email, token});
     } catch (error) {
