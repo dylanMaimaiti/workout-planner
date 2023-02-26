@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthContext.js";
-
+import { useState } from "react";
 //pages and components
 import Home from "./pages/Home.js";
 import Navbar from "./components/Navbar";
@@ -9,6 +9,8 @@ import Signup from "./pages/Signup.js";
 
 function App() {
   const {user} = useAuthContext();
+  const [page, setPage] = useState(0);
+  const pageSize = 4;
 
   return (
     <div className="App">
@@ -18,7 +20,7 @@ function App() {
           <Routes>
             <Route 
               path="/"
-              element={user ? <Home /> : <Navigate to="/login" />} 
+              element={user ? <Home page={page} setPage={setPage} size={pageSize}/> : <Navigate to="/login" />} 
             />
             <Route
               path="/login"

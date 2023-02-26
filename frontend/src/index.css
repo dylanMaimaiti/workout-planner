@@ -33,7 +33,7 @@ header a {
 
 .pages {
   max-width: 1400px;
-  padding: 20px;
+  padding: 10px 20px;
   margin: 0 auto;
 }
 
@@ -50,6 +50,7 @@ header a {
   background: #fff;
   border-radius: 4px;
   margin: 20px auto;
+  margin-bottom: 10px;
   padding: 20px;
   position: relative;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
@@ -96,7 +97,7 @@ input {
 
 form button {
   background: var(--primary);
-  border: o;
+  border: 0;
   color: #fff;
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
@@ -144,4 +145,36 @@ form.signup, form.login {
   padding: 20px;
   background: white;
   border-radius: 4px;
+}
+
+.pageChange {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  padding-top: 5px;
+}
+
+.pageChange button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.pageChange button:disabled {
+  background: var(--primary);
+  opacity: 0.3;
+}
+
+.pageChange p {
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 600;
+  font-size: 1.5em;
 }

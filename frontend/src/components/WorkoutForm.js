@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const WorkoutForm = () => {
-    const {dispatch} = useWorkoutsContext();
+const WorkoutForm = ({page, setPage, size, maxPage, setMax}) => {
+    const {workouts, dispatch} = useWorkoutsContext();
     const [title, setTitle] = useState('');
     const [load, setLoad] = useState('');
     const [reps, setReps] = useState('');
@@ -40,8 +40,27 @@ const WorkoutForm = () => {
             setLoad("");
             setError(null);
             setEmptyFields([]);
-            console.log("New workout added", data);
-            dispatch({type: "CREATE_WORKOUT", payload: data});
+            //update pagination
+            updatePagination(workouts.length);
+            //added to only the home page since it's sorted by time created
+            if (page === 0) {
+                dispatch({type: "CREATE_WORKOUT", payload: data});
+            }
+        }
+    }
+
+    const updatePagination = (length) => {
+        //that page only had 1 item
+        if (length === 1) {
+            if (page > 1) {
+               setPage(page - 1); 
+            } else {
+                setPage(0);
+            }
+        //needed to move a workout over so i delete from screen and on next page request it'll show up
+        } else if (length === size) {
+            dispatch({type: "DELETE_WORKOUT", payload: workouts[length-1]});
+            setMax(maxPage+1);
         }
     }
 

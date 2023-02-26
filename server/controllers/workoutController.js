@@ -2,12 +2,35 @@ const Workout = require("../models/workoutModel.js");
 const mongoose = require("mongoose");
 
 //get all workouts
+//with pagination (has a start page index and number of pages to get)
 const get_workouts = async (req, res) => {
+    
     const user_id = req.user._id;
-
+    //start at 0
+    let pageNum = parseInt(req.query.page);
+    let numItems = parseInt(req.query.size);
+    if (pageNum < 0 || numItems < 0) {
+        res.status(400).json({error: "Invalid page number or number of items per page"});
+    }
+    //gets all of the workouts and sort it
     const workouts = await Workout.find({user_id}).sort({createdAt: -1});
 
-    res.status(200).json(workouts);
+    const pagedWorkouts = [];
+    let ended = false;
+    //extract the paged values
+    for (let i = (pageNum*numItems); i < (pageNum*numItems)+numItems; i++) {
+        //ran out of workouts for the page
+        if (i >= workouts.length) {
+            break;
+        }
+        pagedWorkouts.push(workouts[i]);
+    }
+    //if user requests the last page let them know
+    if ( (pageNum*numItems)+(numItems) >= workouts.length) {
+        ended = true;
+    }
+
+    res.status(200).json({"workouts": pagedWorkouts, ended});
 }
 
 //get a single workout

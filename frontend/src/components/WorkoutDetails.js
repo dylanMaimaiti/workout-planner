@@ -2,8 +2,8 @@ import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-const WorkoutDetails = ({workout}) => {
-    const {dispatch} = useWorkoutsContext();
+const WorkoutDetails = ({page, setPage, workout, forceRefresh, refresh}) => {
+    const {workouts, dispatch} = useWorkoutsContext();
     const {user} = useAuthContext();
 
     const handleClick = async () => {
@@ -19,9 +19,25 @@ const WorkoutDetails = ({workout}) => {
         const data = await response.json();
 
         if (response.ok) {
+            updatePagination(workouts.length);
+            //remove some workout
             dispatch({type: "DELETE_WORKOUT", payload: data});
         }
     }
+
+    const updatePagination = (length) => {
+        //that page only had 1 item
+        if (length === 1) {
+            if (page > 1) {
+               setPage(page - 1); 
+            } else {
+                setPage(0);
+            }
+        } else {
+            forceRefresh(!refresh);
+        }
+    }
+
     return(
         <div className="workout-details">
             <h4>{workout.title}</h4>
